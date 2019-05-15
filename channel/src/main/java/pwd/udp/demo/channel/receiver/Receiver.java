@@ -1,8 +1,5 @@
 package pwd.udp.demo.channel.receiver;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -71,25 +68,7 @@ public class Receiver extends ChannelPeer {
         public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet)
             throws Exception {
             String contentString = packet.content().toString(CharsetUtil.UTF_8);
-            try {
-                Message message = JSON.parseObject(contentString, Message.class);
-                String content = message.getContent();
-                if (content.endsWith("finish")) {
-                    Header header = message.getHeader();
-                    ACK ack = new ACK(header);
-                    DatagramPacket data = new DatagramPacket(
-                        Unpooled.copiedBuffer(JSON.toJSONString(ack), CharsetUtil.UTF_8),
-                        packet.sender());
-                    ctx.writeAndFlush(data);
-                    ReportProxy.recordDuration(message);
-                } else if (content.endsWith("report")) {
-                    ReportProxy.report();
-                } else if (content.endsWith("reset")) {
-                    ReportProxy.reset();
-                }
-            } catch (JSONException e) {
-                ReportProxy.recordHalf(contentString);
-            }
+
         }
 
         @Override
