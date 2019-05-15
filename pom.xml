@@ -10,9 +10,26 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>protocol</module>
+    <module>channel</module>
   </modules>
 
+  <properties>
+    <java.version>1.8</java.version>
+    <netty.version>4.1.36.Final</netty.version>
+    <fastjson.version>1.2.58</fastjson.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>${netty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -27,8 +44,8 @@
     </dependency>
   </dependencies>
 
-
-
-
-
+  <build>
+    <plugins>
+    </plugins>
+  </build>
 </project>
